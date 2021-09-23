@@ -21,6 +21,59 @@ class Task {
     }
 }
 
+(function createMain() {
+    const mainElement = document.createElement('main');
+    mainElement.style = "display: flex; flex-wrap: nowrap; height: 100vh; height: -webkit-fill-available; max-height: 100vh; overflow-x: auto; overflow-y: hidden;";
+    document.querySelector('body').prepend(mainElement);
+})();
+
+(function createSideBar() {
+    const container = document.createElement('div');
+    container.classList = "d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"; 
+    container.style = "width: 280px;";
+    container.id = "sideBar";
+
+    const titleBlock = document.createElement('div');
+    titleBlock.classList = "d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none";
+    
+    const text = document.createElement('span');
+    text.classList = "fs-4";
+    text.innerHTML = "To-Do List";
+
+    titleBlock.appendChild(text);
+    container.append(titleBlock, document.createElement('hr'));
+     
+    document.querySelector('main').append(container);
+})();
+
+(function createProjectList() {
+    const ul = document.createElement('ul');
+    ul.classList = 'nav nav-pills flex-column mb-auto';
+    
+    document.querySelector('#sideBar').append(ul);
+})();
+
+function insertProject(project) {
+    const li = document.createElement('li')
+    li.classList = 'nav-item';
+
+    const link = document.createElement('a');
+    link.classList = 'nav-link text-white'; // swap text-white to active if needed
+    link.href = "#";
+    
+    const svg = document.createElement('svg');
+    svg.classList = 'bi me-2';
+    svg.width = '16';
+    svg.height = '16';
+
+    const title = document.createTextNode(project.name);
+    link.append(svg, title);
+
+    li.append(link);
+    document.querySelector('main ul').append(li);
+}
+
+
 (function createListContainer() {
     let container = document.createElement('div');
     container.classList = "list-group";
@@ -74,11 +127,12 @@ function domRender(task) {
 
 
 let a = new Task('test2');
-let newProject = new Project('testproject');
+let newProject = new Project('Home');
 newProject.addTask(a);
 let b = new Task('test3 i guess');
 newProject.addTask(b);
-console.log(newProject.tasks);
+
+insertProject(newProject);
 
 newProject.tasks.forEach((task) => domRender(task));
 domRender(a);

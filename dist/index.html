@@ -7,8 +7,91 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="content">
+    <main style="display: flex;
+        flex-wrap: nowrap;
+        height: 100vh;
+        height: -webkit-fill-available;
+        max-height: 100vh;
+        overflow-x: auto;
+        overflow-y: hidden;"
+    >
+        
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+          <span class="fs-4">To-Do List</span>
+        </div>
+
+        <hr>
+
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page">
+              <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white">
+              <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-white">
+              <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+              Orders
+            </a>
+          </li>         
+        </ul>
     </div>
+    <div class="b-example-divider"></div>
+    
+    <div class="list-group">
+        <label class="list-group-item d-flex gap-3">
+            <input class="form-check-input flex-shrink-0" type="checkbox" value="" checked="" style="font-size: 1.375em;">
+            <span class="pt-1 form-checked-content">
+            <strong>Finish sales report</strong>
+            <small class="d-block text-muted">
+                <!-- <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"></use></svg> -->
+                1:00–2:00pm
+            </small>
+            </span>
+        </label>
+        <label class="list-group-item d-flex gap-3">
+            <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+            <span class="pt-1 form-checked-content">
+            <strong>Weekly All Hands</strong>
+            <small class="d-block text-muted">
+                <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"></use></svg>
+                2:00–2:30pm
+            </small>
+            </span>
+        </label>
+        <label class="list-group-item d-flex gap-3">
+            <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
+            <span class="pt-1 form-checked-content">
+            <strong>Out of office</strong>
+            <small class="d-block text-muted">
+                <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#alarm"></use></svg>
+                Tomorrow
+            </small>
+            </span>
+        </label>
+        <label class="list-group-item d-flex gap-3 bg-light">
+            <input class="form-check-input form-check-input-placeholder bg-light flex-shrink-0" disabled="" type="checkbox" value="" style="font-size: 1.375em;">
+            <span class="pt-1 form-checked-content">
+            <span class="w-100" contenteditable="true">Add new task...</span>
+            <small class="d-block text-muted">
+                <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#list-check"></use></svg>
+                Choose list...
+            </small>
+            </span>
+        </label>
+        </div>
+        <div id="content" class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+        </div>
+    </main>
     <script src="main.js"></script>
 </body>
 </html>

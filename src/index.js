@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-let myTasks = [];
+let myProjects = [];
 let index = 0;
 
 class Project {
@@ -128,15 +128,21 @@ const homeProject = new Project('Home');
 homeProject.addTask(a);
 let b = new Task('test3 i guess');
 homeProject.addTask(b);
+myProjects.push(homeProject);
 
-insertProject(homeProject);
+
+(function projectListRender() {
+    document.querySelector('main ul').innerHTML = '';
+    myProjects.forEach((project) => {
+        insertProject(project);
+    })
+})();
 
 function taskListRender(Project) {
     let oldList = document.querySelector('#List-Container');
     oldList.innerHTML = '';
     Project.tasks.forEach((task) => domRender(task));
 }
-
 
 
 let form = document.querySelector('form');
@@ -154,5 +160,3 @@ function buttonSubmit() {
     homeProject.addTask(newTask);
     taskListRender(homeProject);
 }
-
-// function to automate render loop

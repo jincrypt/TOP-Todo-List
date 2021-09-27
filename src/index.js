@@ -53,27 +53,6 @@ class Task {
     document.querySelector('#sideBar').append(ul);
 })();
 
-function insertProject(project) {
-    const li = document.createElement('li')
-    li.classList = 'nav-item';
-
-    const link = document.createElement('a');
-    link.classList = 'nav-link text-white'; // swap text-white to active if needed
-    link.href = "#";
-    
-    const svg = document.createElement('svg');
-    svg.classList = 'bi me-2';
-    svg.width = '16';
-    svg.height = '16';
-
-    const title = document.createTextNode(project.name);
-    link.append(svg, title);
-
-    li.append(link);
-    document.querySelector('main ul').append(li);
-}
-
-
 (function createListContainer() {
     let container = document.createElement('div');
     container.classList = "list-group";
@@ -81,7 +60,6 @@ function insertProject(project) {
 
     document.querySelector('main').appendChild(container);
 })();
-
 
 function domRender(task) {
     let container = document.querySelector('#List-Container');
@@ -125,17 +103,56 @@ function domRender(task) {
 
 };
 
+function insertProject(project) {
+    const li = document.createElement('li')
+    li.classList = 'nav-item';
+
+    const link = document.createElement('a');
+    link.classList = 'nav-link text-white'; // swap text-white to active if needed
+    link.href = "#";
+
+    const svg = document.createElement('svg');
+    svg.classList = 'bi me-2';
+    svg.width = '16';
+    svg.height = '16';
+
+    const title = document.createTextNode(project.name);
+    link.append(svg, title);
+
+    li.append(link);
+    document.querySelector('main ul').append(li);
+}
 
 let a = new Task('test2');
-let newProject = new Project('Home');
-newProject.addTask(a);
+const homeProject = new Project('Home');
+homeProject.addTask(a);
 let b = new Task('test3 i guess');
-newProject.addTask(b);
+homeProject.addTask(b);
 
-insertProject(newProject);
+insertProject(homeProject);
 
-newProject.tasks.forEach((task) => domRender(task));
-domRender(a);
-domRender(b);
+function taskListRender(Project) {
+    let oldList = document.querySelector('#List-Container');
+    oldList.innerHTML = '';
+    Project.tasks.forEach((task) => domRender(task));
+}
+
+
+
+let form = document.querySelector('form');
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    buttonSubmit();
+    form.reset();
+});
+
+function buttonSubmit() {
+        // taskDate taskName taskCheck
+    let task = document.querySelector('#taskName').value;
+    
+    let newTask = new Task(task);
+    homeProject.addTask(newTask);
+    taskListRender(homeProject);
+}
 
 // function to automate render loop

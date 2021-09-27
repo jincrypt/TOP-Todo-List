@@ -6,7 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body></body>
+<body>
+
+    <form>
+        <div class="mb-3">
+          <label for="taskName" class="form-label">Task</label>
+          <input type="text" class="form-control" id="taskName">
+        </div>
+        <div class="mb-3">
+          <label for="taskDate" class="form-label">Date</label>
+          <input type="date" class="form-control" id="taskDate">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="taskCheck">
+          <label class="form-check-label" for="taskCheck">Check me out</label>
+        </div>
+        <input id="form-submit" type="submit" class="btn btn-primary" value="Submit">
+      </form>
+
+</body>
     <script src="main.js"></script>
 </body>
 </html>

@@ -1,4 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+// DOM JS auto renders.
+import './createDOM.js';
 
 let myProjects = [];
 let index = 0;
@@ -21,46 +23,6 @@ class Task {
     }
 }
 
-(function createMain() {
-    const mainElement = document.createElement('main');
-    mainElement.style = "display: flex; flex-wrap: nowrap; height: 100vh; height: -webkit-fill-available; max-height: 100vh; overflow-x: auto; overflow-y: hidden;";
-    document.querySelector('body').prepend(mainElement);
-})();
-
-(function createSideBar() {
-    const container = document.createElement('div');
-    container.classList = "d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"; 
-    container.style = "width: 280px;";
-    container.id = "sideBar";
-
-    const titleBlock = document.createElement('div');
-    titleBlock.classList = "d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none";
-    
-    const text = document.createElement('span');
-    text.classList = "fs-4";
-    text.innerHTML = "To-Do List";
-
-    titleBlock.appendChild(text);
-    container.append(titleBlock, document.createElement('hr'));
-     
-    document.querySelector('main').append(container);
-})();
-
-(function createProjectList() {
-    const ul = document.createElement('ul');
-    ul.classList = 'nav nav-pills flex-column mb-auto';
-    
-    document.querySelector('#sideBar').append(ul);
-})();
-
-(function createListContainer() {
-    let container = document.createElement('div');
-    container.classList = "list-group";
-    container.id = 'List-Container';
-
-    document.querySelector('main').appendChild(container);
-})();
-
 function domRender(task) {
     let container = document.querySelector('#List-Container');
     let name = task.name;
@@ -68,10 +30,16 @@ function domRender(task) {
     let taskDate = '10/15/2021';
 
     const label = document.createElement('label');
-    label.classList = 'list-group-item d-flex gap-3';
-
     const input = document.createElement('input');
+    const span = document.createElement('span');
+    const strong = document.createElement('strong');
+    const small = document.createElement('small');
+
+    label.classList = 'list-group-item d-flex gap-3';
     input.classList = 'form-check-input flex-shrink-0';
+    span.classList = 'pt-1 form-checked-content';
+
+
     input.type = 'checkbox';
     input.checked = status;
     input.addEventListener('click', (e) => {
@@ -79,14 +47,9 @@ function domRender(task) {
         console.log(task.complete)
     });
     input.style = 'font-size: 1.375em;';
-    
-    const span = document.createElement('span');
-    span.classList = 'pt-1 form-checked-content';
-    
-    const strong = document.createElement('strong');
+        
     strong.innerHTML = name;
 
-    const small = document.createElement('small');
     if (taskDate) {
         small.innerHTML = taskDate;
     } else {
@@ -97,50 +60,43 @@ function domRender(task) {
     span.appendChild(strong);
     span.appendChild(small);
     label.appendChild(input);
-    label.appendChild(span);
-    
+    label.appendChild(span);    
     container.appendChild(label);
-
 };
 
 function insertProject(project) {
     const li = document.createElement('li')
-    li.classList = 'nav-item';
-
     const link = document.createElement('a');
-    link.classList = 'nav-link text-white'; // swap text-white to active if needed
-    link.href = "#";
-
     const svg = document.createElement('svg');
+    const title = document.createTextNode(project.name);
+
+    li.classList = 'nav-item';
+    link.classList = 'nav-link text-white'; // swap text-white to active if needed
     svg.classList = 'bi me-2';
     svg.width = '16';
     svg.height = '16';
 
-    const title = document.createTextNode(project.name);
-    link.append(svg, title);
+    // Update, is this necessary? I think i can remove.
+    link.href = "#";
+
+    // Show task list from this project when clicked.
     link.addEventListener('click', (e) => {
         taskListRender(project);
+        // TODO: Set classlist to "active" and set all others as "text-white"
     });
 
-
+    link.append(svg, title);
     li.append(link);
+
     document.querySelector('main ul').append(li);
 }
 
-let a = new Task('test2');
-const homeProject = new Project('Home');
-homeProject.addTask(a);
-let b = new Task('test3 i guess');
-homeProject.addTask(b);
-myProjects.push(homeProject);
-
-
-(function projectListRender() {
+function projectListRender() {
     document.querySelector('main ul').innerHTML = '';
     myProjects.forEach((project) => {
         insertProject(project);
     })
-})();
+};
 
 function taskListRender(Project) {
     let oldList = document.querySelector('#List-Container');
@@ -148,7 +104,7 @@ function taskListRender(Project) {
     Project.tasks.forEach((task) => domRender(task));
 }
 
-
+//Add below to a create form module
 let form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -164,3 +120,13 @@ function buttonSubmit() {
     homeProject.addTask(newTask);
     taskListRender(homeProject);
 }
+
+
+//Examples
+let a = new Task('test2');
+const homeProject = new Project('Home');
+homeProject.addTask(a);
+let b = new Task('test3 i guess');
+homeProject.addTask(b);
+myProjects.push(homeProject);
+projectListRender();

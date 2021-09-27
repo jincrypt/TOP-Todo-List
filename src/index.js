@@ -118,6 +118,10 @@ function insertProject(project) {
 
     const title = document.createTextNode(project.name);
     link.append(svg, title);
+    link.addEventListener('click', (e) => {
+        taskListRender(project);
+    });
+
 
     li.append(link);
     document.querySelector('main ul').append(li);

@@ -91,7 +91,6 @@ function insertProject(project) {
     document.querySelector('main ul').append(li);
 }
 
-
 function createAddProjectButton() {
     (function createAddProjectDiv() {
         let li = document.createElement('li');
@@ -156,11 +155,17 @@ function createAddProjectButton() {
         btnGroup.role = "group";
 
         add.addEventListener('click', (e) => {
-            if (document.querySelector('#projectNameForm')) {
-                toggleProjectView();
+            if (document.querySelector('#projectNameForm').value) {
+                let newProject = new Project(document.querySelector('#projectNameForm').value);
+                myProjects.push(newProject);
+                projectListRender();
             }
         })
 
+        cancel.addEventListener('click', (e) => {
+            document.querySelector('#projectNameForm').value = '';
+            toggleProjectView();
+        })
 
         btnGroup.append(add, cancel);
         div.append(addProjectField, btnGroup);
@@ -189,7 +194,9 @@ function projectListRender() {
 function taskListRender(Project) {
     let oldList = document.querySelector('#List-Container');
     oldList.innerHTML = '';
+    oldList.setAttribute('data-id', Project.name);
     Project.tasks.forEach((task) => domRender(task));
+    console.log(myProjects)
 }
 
 //Add below to a create form module
@@ -203,10 +210,13 @@ form.addEventListener('submit', (e) => {
 function buttonSubmit() {
         // taskDate taskName taskCheck
     let task = document.querySelector('#taskName').value;
-    
+    let project = document.querySelector('#List-Container').dataset.id;
+    project = myProjects.filter((item) => {
+        return item.name === project;
+    })[0];
     let newTask = new Task(task);
-    homeProject.addTask(newTask);
-    taskListRender(homeProject);
+    project.addTask(newTask);
+    taskListRender(project);
 }
 
 

@@ -221,10 +221,13 @@ function buttonSubmit() {
 
 
 //Examples
-let a = new Task('test2');
 const homeProject = new Project('Home');
-homeProject.addTask(a);
-let b = new Task('test3 i guess');
-homeProject.addTask(b);
+homeProject.addTask(new Task('Build form + button for adding tasks'));
+homeProject.addTask(new Task('Change class for active project, and change inactive projects to white text'));
+homeProject.addTask(new Task('Storage options?'));
+homeProject.addTask(new Task('More task details (details, completion date, completion status'));
+homeProject.addTask(new Task('Improve UI for task list portion (RH)'));
+homeProject.addTask(new Task('Include footer for made by'));
 myProjects.push(homeProject);
 projectListRender();
+taskListRender(homeProject);

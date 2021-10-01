@@ -1,6 +1,6 @@
 const createMain = (() => {
     const mainElement = document.createElement('main');
-   
+
     mainElement.style = "display: flex; flex-wrap: nowrap; height: 100vh; height: -webkit-fill-available; max-height: 100vh; overflow-x: auto; overflow-y: hidden;";
     
     document.querySelector('body').prepend(mainElement);
@@ -21,7 +21,7 @@ const createSideBar = (() => {
 
     titleBlock.appendChild(text);
     container.append(titleBlock, document.createElement('hr'));
-     
+    
     document.querySelector('main').append(container);
 })();
 
@@ -36,10 +36,8 @@ const createProjectList = (() => {
 const createListContainer = (() => {
     let container = document.createElement('div');
     
-    container.classList = "list-group";
+    container.classList = "list-group w-100";
     container.id = 'List-Container';
     
     document.querySelector('main').appendChild(container);
 })();
-
-// export { createMain }

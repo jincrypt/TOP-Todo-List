@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 // DOM JS auto renders.
 import './createDOM.js';
+import { createButton, createAddSVG } from './createElement.js'
 
 let myProjects = [];
 let index = 0;
@@ -23,7 +24,7 @@ class Task {
     }
 }
 
-function domRender(task) {
+function taskRender(task) {
     let container = document.querySelector('#List-Container');
     let name = task.name;
     let status = task.complete;
@@ -39,12 +40,10 @@ function domRender(task) {
     input.classList = 'form-check-input flex-shrink-0';
     span.classList = 'pt-1 form-checked-content';
 
-
     input.type = 'checkbox';
     input.checked = status;
     input.addEventListener('click', (e) => {
         task.complete = !task.complete;
-        console.log(task.complete)
     });
     input.style = 'font-size: 1.375em;';
         
@@ -94,29 +93,19 @@ function insertProject(project) {
 function createAddProjectButton() {
     (function createAddProjectDiv() {
         let li = document.createElement('li');
-        li.id = "addProject";
         let addProjectButtonDiv = document.createElement('div'); 
-        addProjectButtonDiv.id = "addProjectButton";
-        let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        let pathA = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        let pathB = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        let svg = createAddSVG('white');
 
-        svg.setAttribute('width', '16');
-        svg.setAttribute('height', '16');
-        svg.setAttribute('fill','white');
-        pathA.setAttributeNS(null, 'd', "M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z");
-        pathB.setAttributeNS(null, 'd', "M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z");
+        li.id = "addProject";
         li.style = "text-align:right"
-        svg.classList = "bi bi-plus-square";    
         li.classList = "nav-item";
+                
+        addProjectButtonDiv.id = "addProjectButton";
         addProjectButtonDiv.classList = "nav-link text-white";
         addProjectButtonDiv.style = "cursor:pointer";
         
-        svg.appendChild(pathA);
-        svg.appendChild(pathB);
         addProjectButtonDiv.append(svg, " Add Project");
         
-        // Function for adding project (show form)
         addProjectButtonDiv.addEventListener('click', (e) => {
             toggleProjectView();
         });
@@ -135,14 +124,6 @@ function createAddProjectButton() {
         addProjectField.placeholder = "Project Name";
         addProjectField.classList = "form-control";
         addProjectField.id = 'projectNameForm';
-
-        const createButton = (name) => {
-            let button = document.createElement('button');
-            button.classList = "btn btn-sm";
-            button.type = "button";
-            button.innerHTML = name;
-            return button;
-        }
 
         let add = createButton("+");
         add.classList += " btn-success"
@@ -195,20 +176,105 @@ function taskListRender(Project) {
     let oldList = document.querySelector('#List-Container');
     oldList.innerHTML = '';
     oldList.setAttribute('data-id', Project.name);
-    Project.tasks.forEach((task) => domRender(task));
-    console.log(myProjects)
+    Project.tasks.forEach((task) => taskRender(task));
+    //render add task button
+    createTaskListForm()
 }
 
-//Add below to a create form module
-let form = document.querySelector('form');
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    buttonSubmit();
-    form.reset();
-});
+function createTaskListForm() {
+    (function createAddTaskDiv() {
+        let container = document.querySelector('#List-Container');
+        let addTaskButton = document.createElement('div');
+    
+        const label = document.createElement('label');
+        const svg = createAddSVG('black');
+        const strong = document.createElement('strong');
+
+        addTaskButton.id = "addTaskButton"
+        label.id = "addTask";
+        label.classList = 'list-group-item d-flex gap-3';
+        
+        strong.append(svg, " Add Task");
+
+        strong.style = "cursor:pointer";
+
+        strong.addEventListener('click', (e) => {
+            toggleTaskForm();
+        })
+
+        addTaskButton.append(strong);
+        label.appendChild(addTaskButton);
+        
+        container.appendChild(label);    
+    })();
+
+    (function createAddTaskForm() {
+        let addTaskContainer = document.querySelector('#addTask');
+        let addTaskFormContainer = document.createElement('div');
+        addTaskFormContainer.id = "addTaskForm";
+
+        let addTaskForm = document.createElement('form');
+
+        let row1 = document.createElement('div');
+        let row2 = document.createElement('div');
+
+        let taskInput = document.createElement('input');
+        taskInput.type = "text";
+        taskInput.classList = "form-control-sm";
+        taskInput.id = "taskName";
+        taskInput.placeholder = "Task Name";
+
+        row1.append(taskInput);
+
+        let dateInput = document.createElement('input');
+        dateInput.type = "date";
+        dateInput.classList = "form-control-sm d-block";
+        dateInput.id = "taskDate";
+
+        row2.append(dateInput);
+
+        let add = createButton("+");
+        add.classList += " btn-success"
+        
+        let cancel = createButton("x");
+        cancel.classList += " btn-danger";
+
+        let btnGroup = document.createElement('div');
+        btnGroup.classList = "btn-group";
+        btnGroup.role = "group";
+
+        add.addEventListener('click', (e) => {
+            if (document.querySelector('#taskName').value) {
+// TODO Add function
+                console.log(document.querySelector('#taskName').value)
+                buttonSubmit();
+                document.querySelector('form').reset();
+            }
+            
+        })
+
+        cancel.addEventListener('click', (e) => {
+            document.querySelector('form').reset();
+            toggleTaskForm();
+        })
+
+        btnGroup.append(add, cancel);
+        addTaskForm.append(row1, row2);
+        addTaskFormContainer.append(addTaskForm, btnGroup);
+        addTaskContainer.append(addTaskFormContainer);
+        addTaskFormContainer.style.display = "none";
+
+    })();
+
+    function toggleTaskForm() {
+        let addTaskButton = document.querySelector('#addTaskButton');
+        let addTaskForm = document.querySelector('#addTaskForm');
+
+        return [addTaskButton.style.display, addTaskForm.style.display] = [addTaskForm.style.display, addTaskButton.style.display]
+    }
+}
 
 function buttonSubmit() {
-        // taskDate taskName taskCheck
     let task = document.querySelector('#taskName').value;
     let project = document.querySelector('#List-Container').dataset.id;
     project = myProjects.filter((item) => {
@@ -225,7 +291,9 @@ const homeProject = new Project('Home');
 homeProject.addTask(new Task('Build form + button for adding tasks'));
 homeProject.addTask(new Task('Change class for active project, and change inactive projects to white text'));
 homeProject.addTask(new Task('Storage options?'));
+homeProject.addTask(new Task('Add message when trying to add project without filling form'));
 homeProject.addTask(new Task('More task details (details, completion date, completion status'));
+homeProject.addTask(new Task('if task is late and not complete;  turn date red'));
 homeProject.addTask(new Task('Improve UI for task list portion (RH)'));
 homeProject.addTask(new Task('Include footer for made by'));
 myProjects.push(homeProject);

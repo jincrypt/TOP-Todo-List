@@ -1,6 +1,7 @@
 
 import { createButton, createAddSVG } from './createElement.js';
-import { Project,  myProjects } from './index.js'
+import { Project } from './index.js';
+import { myProjects, updateStorage } from './storage.js';
 import { acceptTaskEvent, cancelTaskEvent, projectButtonEvent, taskButtonEvent } from './DOMevents.js';
 
 const createMain = (() => {
@@ -56,6 +57,20 @@ function taskListRender(Project) {
     taskButtonEvent();
     acceptTaskEvent();
     cancelTaskEvent();
+    projectSelection(Project.name);
+    // set Active Project
+}
+
+function projectSelection(project) {
+    
+    document.querySelectorAll('ul li a').forEach((item) => {
+        console.log(item.getAttribute('data-name'), project);
+        if (item.getAttribute('data-name') === project) {
+            item.classList = "nav-link active";
+        } else {
+            item.classList = "nav-link text-white";
+        }
+    })
 }
 
 function taskRender(task) {
@@ -78,6 +93,7 @@ function taskRender(task) {
     input.checked = status;
     input.addEventListener('click', (e) => {
         task.complete = !task.complete;
+        updateStorage();
     });
     input.style = 'font-size: 1.375em;';
         
@@ -105,12 +121,10 @@ function insertProject(project) {
 
     li.classList = 'nav-item';
     link.classList = 'nav-link text-white'; // swap text-white to active if needed
+    link.setAttribute('data-name', project.name);
     svg.classList = 'bi me-2';
     svg.width = '16';
     svg.height = '16';
-
-    // Update, is this necessary? I think i can remove.
-    link.href = "#";
 
     // Show task list from this project when clicked.
     link.addEventListener('click', (e) => {
@@ -169,6 +183,7 @@ function createAddProjectButton() {
             if (document.querySelector('#projectNameForm').value) {
                 let newProject = new Project(document.querySelector('#projectNameForm').value);
                 myProjects.push(newProject);
+                updateStorage();
                 projectListRender();
             }
         })
@@ -185,6 +200,7 @@ function createAddProjectButton() {
         li.appendChild(div);
     })();
 }
+
 function createTaskListForm() {
     (function createAddTaskDiv() {
         let container = document.querySelector('#List-Container');
@@ -255,7 +271,6 @@ function createTaskListForm() {
     })();
 }
 
-
 function projectListRender() {
     document.querySelector('main ul').innerHTML = '';
     myProjects.forEach((project) => {
@@ -264,6 +279,5 @@ function projectListRender() {
     createAddProjectButton();
     projectButtonEvent();
 };
-
 
 export { taskListRender, projectListRender }

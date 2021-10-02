@@ -1,5 +1,6 @@
-import { taskListRender } from "./createDOM.js"
-import { myProjects, Task } from "./index.js"
+import { taskListRender } from "./createDOM.js";
+import { Project, Task } from './index.js';
+import { myProjects, updateStorage } from './storage.js';
 
 function toggleTaskForm() {
     let addTaskButton = document.querySelector('#addTaskButton');
@@ -13,7 +14,6 @@ function toggleProjectView() {
     let addProjectForm = document.querySelector('#addProjectForm');
 
     return [addProjectButton.style.display, addProjectForm.style.display] = [addProjectForm.style.display, addProjectButton.style.display];
-    
 }
 
 function buttonSubmit() {
@@ -24,6 +24,8 @@ function buttonSubmit() {
     })[0];
     let newTask = new Task(task);
     project.addTask(newTask);
+    updateStorage();
     taskListRender(project);
 }
+
 export { toggleTaskForm, toggleProjectView, buttonSubmit }

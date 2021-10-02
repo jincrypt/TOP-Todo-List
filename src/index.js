@@ -12,11 +12,18 @@ class Project {
     addTask(task) {
         this.tasks.push(task);
     };
+
+    removeTask(name) {
+        this.tasks = this.tasks.filter((task) => {
+            return task.name !== name;
+        });
+    }
 }
 
 class Task { 
-    constructor(name) {
+    constructor(name, date = 'Today') {
         this.name = name;
+        this.date = date;
         this.complete = false;
     }
 }

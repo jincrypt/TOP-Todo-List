@@ -15,7 +15,7 @@ const taskButtonEvent = () => {
 
 const acceptTaskEvent = () => {
     document.querySelector('#acceptTask').addEventListener('click', (e) => {
-        if (document.querySelector('#taskName').value) {
+        if (document.querySelector('#taskName').value && document.querySelector('#taskDate').value) {
             buttonSubmit();
             document.querySelector('form').reset();
         }    

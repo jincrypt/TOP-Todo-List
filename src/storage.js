@@ -39,6 +39,7 @@ function storageCheck() {
                 retrievedProject.tasks.forEach((task) => {
                     let newTask = new Task(task.name);
                     newTask.complete = task.complete;
+                    newTask.date = task.date;
                     tempProject.addTask(newTask);
                 });
 
@@ -66,8 +67,6 @@ function updateStorage() {
 function defaultList() {
     //Examples
     const homeProject = new Project('Home');
-    homeProject.addTask(new Task('Change class for active project, and change inactive projects to white text'));
-    homeProject.addTask(new Task('Storage options?'));
     homeProject.addTask(new Task('Add message when trying to add project without filling form'));
     homeProject.addTask(new Task('More task details (details, completion date, completion status'));
     homeProject.addTask(new Task('if task is late and not complete;  turn date red'));

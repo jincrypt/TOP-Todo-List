@@ -1,8 +1,9 @@
 
-import { createButton, createAddSVG } from './createElement.js';
+import { createButton, createAddSVG, createTrashCan } from './createElement.js';
 import { Project } from './index.js';
 import { myProjects, updateStorage } from './storage.js';
 import { acceptTaskEvent, cancelTaskEvent, projectButtonEvent, taskButtonEvent } from './DOMevents.js';
+import { deleteTask } from './functions.js';
 
 const createMain = (() => {
     const mainElement = document.createElement('main');
@@ -58,13 +59,10 @@ function taskListRender(Project) {
     acceptTaskEvent();
     cancelTaskEvent();
     projectSelection(Project.name);
-    // set Active Project
 }
 
 function projectSelection(project) {
-    
     document.querySelectorAll('ul li a').forEach((item) => {
-        console.log(item.getAttribute('data-name'), project);
         if (item.getAttribute('data-name') === project) {
             item.classList = "nav-link active";
         } else {
@@ -77,7 +75,8 @@ function taskRender(task) {
     let container = document.querySelector('#List-Container');
     let name = task.name;
     let status = task.complete;
-    let taskDate = '10/15/2021';
+    let taskDate = task.date;    
+    let trash = createTrashCan();
 
     const label = document.createElement('label');
     const input = document.createElement('input');
@@ -100,12 +99,17 @@ function taskRender(task) {
     strong.innerHTML = name;
 
     if (taskDate) {
-        small.innerHTML = taskDate;
+        small.innerHTML = taskDate + " ";
     } else {
         small.innerHTML = '';
     }
-    small.classList = 'd-block text-muted';
+    trash.style.cursor = 'pointer';
+    trash.addEventListener('click', (e) => {
+        deleteTask(e);
+    })
 
+    small.classList = 'd-block text-muted';
+    small.append(trash);
     span.appendChild(strong);
     span.appendChild(small);
     label.appendChild(input);
@@ -120,7 +124,7 @@ function insertProject(project) {
     const title = document.createTextNode(project.name);
 
     li.classList = 'nav-item';
-    link.classList = 'nav-link text-white'; // swap text-white to active if needed
+    link.classList = 'nav-link text-white';
     link.setAttribute('data-name', project.name);
     svg.classList = 'bi me-2';
     svg.width = '16';
@@ -129,7 +133,6 @@ function insertProject(project) {
     // Show task list from this project when clicked.
     link.addEventListener('click', (e) => {
         taskListRender(project);
-        // TODO: Set classlist to "active" and set all others as "text-white"
     });
 
     link.append(svg, title);

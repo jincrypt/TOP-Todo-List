@@ -1,6 +1,6 @@
 # Project: To Do List
 
-[Live Preview](https://jincrypt.github.io/TOP-ToDo-List/)
+[Live Preview](https://jincrypt.github.io/TOP-Todo-List/)
 
 ## Criteria:
 * Your ‘todos’ are going to be objects that you’ll want to dynamically create, which means either using factories or constructors/classes to generate them.

@@ -1,4 +1,4 @@
-# Project: Calculator
+# Project: To Do List
 
 [Live Preview](https://jincrypt.github.io/TOP-ToDo-List/)
 

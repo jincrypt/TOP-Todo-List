@@ -3,12 +3,12 @@ import { createButton, createAddSVG, createTrashCan } from './createElement.js';
 import { Project } from './index.js';
 import { myProjects, updateStorage } from './storage.js';
 import { acceptTaskEvent, cancelTaskEvent, projectButtonEvent, taskButtonEvent } from './DOMevents.js';
-import { deleteTask } from './functions.js';
+import { deleteTask, toggleProjectView } from './functions.js';
 
 const createMain = (() => {
     const mainElement = document.createElement('main');
 
-    mainElement.style = "display: flex; flex-wrap: nowrap; height: 100vh; height: -webkit-fill-available; max-height: 100vh; overflow-x: auto; overflow-y: hidden;";
+    mainElement.style = "display: flex; flex-wrap: nowrap; height: 100vh; height: -webkit-fill-available; max-height: 100%; overflow-x: auto; overflow-y: hidden;";
     
     document.querySelector('body').prepend(mainElement);
 })();

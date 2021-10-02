@@ -8,7 +8,7 @@ import { deleteTask, toggleProjectView } from './functions.js';
 const createMain = (() => {
     const mainElement = document.createElement('main');
 
-    mainElement.style = "display: flex; flex-wrap: nowrap; height: 100vh; height: -webkit-fill-available; max-height: 100vh; overflow-x: auto; overflow-y: hidden;";
+    mainElement.style = "display: flex; flex-wrap: nowrap; height: 100vh; max-height: 100vh; overflow-x: auto; overflow-y: hidden;";
     
     document.querySelector('body').prepend(mainElement);
 })();

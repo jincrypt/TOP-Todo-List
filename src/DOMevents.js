@@ -1,32 +1,44 @@
-import { toggleProjectView, toggleTaskForm, buttonSubmit } from './functions.js';
+import {
+  toggleProjectView,
+  toggleTaskForm,
+  buttonSubmit,
+} from "./functions.js";
 // event listeners
 
 const projectButtonEvent = () => {
-    document.querySelector('#addProjectButton').addEventListener('click', (e) => {
-        toggleProjectView();
-    });
+  document.querySelector("#addProjectButton").addEventListener("click", (e) => {
+    toggleProjectView();
+  });
 };
 
 const taskButtonEvent = () => {
-    document.querySelector('#addTaskButton').addEventListener('click', (e) => {
-        toggleTaskForm();
-    });
+  document.querySelector("#addTaskButton").addEventListener("click", (e) => {
+    toggleTaskForm();
+  });
 };
 
 const acceptTaskEvent = () => {
-    document.querySelector('#acceptTask').addEventListener('click', (e) => {
-        if (document.querySelector('#taskName').value && document.querySelector('#taskDate').value) {
-            buttonSubmit();
-            document.querySelector('form').reset();
-        }    
-    })
+  document.querySelector("#acceptTask").addEventListener("click", (e) => {
+    if (
+      document.querySelector("#taskName").value &&
+      document.querySelector("#taskDate").value
+    ) {
+      buttonSubmit();
+      document.querySelector("form").reset();
+    }
+  });
 };
 
 const cancelTaskEvent = () => {
-    document.querySelector('#cancelTask').addEventListener('click', (e) => {
-        document.querySelector('form').reset();
-        toggleTaskForm();
-    })
+  document.querySelector("#cancelTask").addEventListener("click", (e) => {
+    document.querySelector("form").reset();
+    toggleTaskForm();
+  });
 };
 
-export { projectButtonEvent, taskButtonEvent, acceptTaskEvent, cancelTaskEvent }
+export {
+  projectButtonEvent,
+  taskButtonEvent,
+  acceptTaskEvent,
+  cancelTaskEvent,
+};
